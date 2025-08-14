@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Estimez l’impact de votre engagement</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="container">
+    <!-- Colonne gauche : Formulaire simplifié + habitudes de don -->
+    <div class="form-section">
+      <h1>Estimez l’impact de votre engagement</h1>
+      <p class="intro">Pas besoin d’être expert : répondez simplement aux questions. <span class="help" title="Votre réponse n’a pas besoin d’être parfaite : elle nous aide à estimer l’impact actuel.">ℹ️</span></p>
+
+      <form id="impact-form">
+        <!-- HABITUDES DE DON (impact ACTUEL) -->
+        <h2 class="section-title">Vos habitudes de don (aujourd’hui)</h2>
+        <div class="grid-2">
+          <div class="form-group">
+            <label for="donMontant">Tranche de don annuel</label>
+            <select id="donMontant" required>
+              <option value="">-- Choisir --</option>
+              <option value="m0">Moins de 1 000 €</option>
+              <option value="m1">1 000 – 10 000 €</option>
+              <option value="m2">10 000 – 50 000 €</option>
+              <option value="m3">50 000 € et +</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="donFrequence">Fréquence des dons</label>
+            <select id="donFrequence" required>
+              <option value="">-- Choisir --</option>
+              <option value="ponctuel">Ponctuel</option>
+              <option value="recurrent">Récurrent (trimestriel / annuel)</option>
+              <option value="mensuel">Mensuel</option>
+            </select>
+          </div>
+        </div>
+        <div class="grid-2">
+          <div class="form-group">
+            <label for="donHorizon">Horizon d’engagement</label>
+            <select id="donHorizon" required>
+              <option value="">-- Choisir --</option>
+              <option value="h0">Au coup par coup</option>
+              <option value="h1">1 an</option>
+              <option value="h3">3 ans</option>
+              <option value="h5">5 ans et +</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="donImplication">Implication non financière</label>
+            <select id="donImplication" required>
+              <option value="">-- Choisir --</option>
+              <option value="aucune">Aucune</option>
+              <option value="parfois">Parfois (ponctuelle)</option>
+              <option value="reguliere">Régulière (mentorat, pro bono)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- INTENTIONS (langage simple) -->
+        <h2 class="section-title">Vos objectifs (en toute simplicité)</h2>
+        <div class="form-group">
+          <label for="qPortee">Combien de personnes souhaitez-vous toucher ?
+            <span class="help" title="Portée = nombre de personnes touchées (participants, visiteurs, bénéficiaires).">*</span>
+          </label>
+          <select id="qPortee" required>
+            <option value="">-- Choisir --</option>
+            <option value="faible">Faible (projet ciblé)</option>
+            <option value="moyen">Moyen</option>
+            <option value="fort">Fort (large audience)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="qProfondeur">À quel point souhaitez-vous créer un changement durable ?
+            <span class="help" title="Profondeur = intensité du changement pour les personnes aidées (durable, transformant).">*</span>
+          </label>
+          <select id="qProfondeur" required>
+            <option value="">-- Choisir --</option>
+            <option value="faible">Plutôt ponctuel</option>
+            <option value="moyen">Un peu des deux</option>
+            <option value="fort">Durable / transformation</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="qEquite">Souhaitez-vous prioriser des publics éloignés (rural, QPV, primo-visiteurs, fragiles) ?
+            <span class="help" title="Équité & inclusion = attention portée aux publics moins servis ou éloignés.">*</span>
+          </label>
+          <select id="qEquite" required>
+            <option value="">-- Choisir --</option>
+            <option value="faible">Pas spécialement</option>
+            <option value="moyen">Oui, quand c’est possible</option>
+            <option value="fort">Oui, c’est prioritaire</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="qCapacitation">Souhaitez-vous aider les bénéficiaires à gagner en autonomie ?
+            <span class="help" title="Capacitation = permettre aux personnes/organisations de devenir plus autonomes et compétentes.">*</span>
+          </label>
+          <select id="qCapacitation" required>
+            <option value="">-- Choisir --</option>
+            <option value="faible">Peu / pas</option>
+            <option value="moyen">Oui, partiellement</option>
+            <option value="fort">Oui, fortement</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="qRayonnement">Est-il important que votre action inspire et se voie ?
+            <span class="help" title="Rayonnement = visibilité et inspiration de votre action (communication, diffusion, effet d’exemple).">*</span>
+          </label>
+          <select id="qRayonnement" required>
+            <option value="">-- Choisir --</option>
+            <option value="faible">Peu important</option>
+            <option value="moyen">Assez important</option>
+            <option value="fort">Très important</option>
+          </select>
+        </div>
+
+        <p class="footnote">* Explications rapides : passez la souris sur le symbole pour obtenir une définition simple.</p>
+
+        <button type="submit">Voir ma carte d’impact <span class="arrow">→</span></button>
+      </form>
+
+      <!-- Résultats -->
+      <div id="resultat" class="result-block" hidden>
+        <h2>Votre carte d’impact</h2>
+        <canvas id="radarImpact"></canvas>
+
+        <div class="benchmark">
+          <h3>Référence simple</h3>
+          <p class="muted">Nous comparons vos scores à une <strong>référence fixe</strong> (50/100 ≈ 2,5/5), utile quand il n’y a pas encore de données réelles.</p>
+          <ul id="benchmark-list"></ul>
+        </div>
+
+        <div class="cta-wrap">
+          <button id="cta-expert" class="btn-secondary">Construire mon tableau d’impact avec un expert</button>
+        </div>
+      </div>
+
+      <!-- Lead form allégé -->
+      <form id="lead-form" class="lead-form">
+        <h2>Être recontacté par un expert</h2>
+        <input type="email" id="lead-email" placeholder="Email" required />
+        <select id="lead-region" required>
+          <option value="">Votre région</option>
+          <option value="idf">Île-de-France</option>
+          <option value="sud">Sud</option>
+          <option value="nord">Nord</option>
+          <option value="ouest">Ouest</option>
+          <option value="est">Est</option>
+        </select>
+        <select id="lead-don" required>
+          <option value="">Avez-vous déjà fait un don à une organisation philanthropique ?</option>
+          <option value="jamais">Non, jamais</option>
+          <option value="unefois">Oui, une fois</option>
+          <option value="quelquesfois">Quelques fois</option>
+          <option value="souvent">Très souvent</option>
+        </select>
+        <label class="chk consent"><input type="checkbox" id="lead-rgpd" required> J’accepte d’être contacté(e) et la politique de confidentialité.</label>
+        <button type="submit">Être rappelé(e)</button>
+      </form>
+    </div>
+
+    <!-- Colonne droite : visuel -->
+    <div class="visual-section">
+      <div class="image-wrapper">
+        <img src="images/joinUs-1.png" alt="Visuel 1" class="art-img art-main" />
+        <img src="images/joinUs-2.png" alt="Visuel 2" class="art-img art-overlay" />
+      </div>
+    </div>
+  </div>
+
+  <script src="dist/main.js"></script>
+</body>
+</html>
